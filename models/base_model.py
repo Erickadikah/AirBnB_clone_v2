@@ -4,7 +4,9 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from model.engine import filestorage
+from models.engine import filestorage
+
+
 Base = declarative_base()
 
 
@@ -29,7 +31,7 @@ class BaseModel:
                 else:
                     if key == "updated_at":
                         kwargs['updated_at'] = datetime.strptime(
-                             kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+                            kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
 
@@ -54,7 +56,7 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         if '_sa_instance_state' in dictionary.keys():
-            del(dictionary[_sa_instance_state])
+            del (dictionary[_sa_instance_state])
         return dictionary
 
     def delete(self):
