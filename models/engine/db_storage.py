@@ -26,44 +26,44 @@ class DBStorage():
 
         self.__engine = engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}".format(user, passwd, host, db), pool_pre_ping=True)
 
-        if env == "test":
+    if env == "test":
         Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-    if cls = is None:
-         objs = self.__session.query(User).all()
-         objs.extend(self.__session.query(State).all())
-         objs.extend(self.__session.query(City).all())
-         objs.extent(self.__session.query(Amenity).all())
-         objs.extend(self.__session.query(Place).all())
-         objs.extend(self.__session.query(Review).all())
+        if cls is None:
+            objs = self.__session.query(User).all()
+            objs.extend(self.__session.query(State).all())
+            objs.extend(self.__session.query(City).all())
+            objs.extent(self.__session.query(Amenity).all())
+            objs.extend(self.__session.query(Place).all())
+            objs.extend(self.__session.query(Review).all())
 
-    else:
-         if type(cls) == str:
-            cls = eval(cls)
-            obj = self.__session.query(cls)
+        else:
+             if type(cls) == str:
+                cls = eval(cls)
+                obj = self.__session.query(cls)
 
-        return {"{}.{}".format(type(obj).__name__, obj.id) obj for obj in objs}
+        return {"{}.{}".format(type(obj).__name__, obj.id): obj for obj in objs}
 
     def new(self, obj):
-    self.session.add(obj)
+        self.session.add(obj)
     """a funtion to add current database session"""
 
     def save(self):
-    self.session.commit()
+        self.session.commit()
     """a function to save"""
 
     def delete(self, obj=none):
-    if obj in not None:
-        self.session.delete(obj)
+        if obj is not None:
+            self.session.delete(obj)
     """a function to delete current database session"""
 
     def reload(self):
-    Base.metadata.create_all(self.__engine)
-    session.factory = session.maker(bind=self.__engine,
+        Base.metadata.create_all(self.__engine)
+        session.factory = session.maker(bind=self.__engine,
                                     expire_on_commit=False)
-    session = scoped_session(session_factory)
-    self.__session = Session()
+        session = scoped_session(session_factory)
+        self.__session = Session()
 
     def close(self):
         self.__session.close()
