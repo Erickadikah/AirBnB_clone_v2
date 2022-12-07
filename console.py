@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 """ Console Module """
-import sys
-import re
-import os
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -115,6 +112,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
+
     def do_create(self, args):
         """ Create an object of any class"""
         input = args.split()
@@ -211,7 +209,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
