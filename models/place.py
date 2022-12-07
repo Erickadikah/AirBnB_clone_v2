@@ -2,12 +2,12 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel
 from models.base_model import Base
-from sqlalchemy import Column, String, ForeignKey
+
 class Place(BaseModel, Base):
     __tablename__ = "places"
     """ A place to stay """
-    city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
-    user_id = Column(String(60), ForeignKey("user.id"), nullable=False)
+    city_id = ""
+    user_id = ""
     name = ""
     description = ""
     number_rooms = 0

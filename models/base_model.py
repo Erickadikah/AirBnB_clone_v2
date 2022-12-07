@@ -35,6 +35,10 @@ class BaseModel:
             del kwargs['__class__']
             self.__dict__.update(kwargs)
 
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+
+
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
@@ -60,6 +64,5 @@ class BaseModel:
         return dictionary
 
     def delete(self):
-        """delete current instance """
-        obj_id = f"{cls}.{self.id}"
-        FileStorage.delete(obj_id)
+        """delete current instance from file storage"""
+        storage.delete()
