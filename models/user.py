@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 """module for user class, inherits from the Base and BaseModel classes"""
-from base_model import BaseModel
-from base_model import Base
+from models.base_mode import BaseModel, Base
 from sqlalchemy import String, Column
-from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
@@ -13,5 +11,3 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128))
     last_name = Column(String(128))
-    places = relationship("Place", backref="user", cascade="delete")
-    reviews = relationship("Review", backref="user", cascade="delete")
