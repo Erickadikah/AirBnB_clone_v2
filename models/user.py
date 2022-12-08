@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """module for user class, inherits from the Base and BaseModel classes"""
-from models.base_mode import BaseModel, Base
+from models.base_model import BaseModel, Base
 from sqlalchemy import String, Column
 
 
