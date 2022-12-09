@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
+from models.amenity import Amenity
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-
+#from models.review import Review
 
 class Place(BaseModel, Base):
     __tablename__ = "places"
@@ -17,3 +18,4 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float)
     longitude = Column(Float)
+    reviews  = relationship("Review", backref="place", cascade="delete")
