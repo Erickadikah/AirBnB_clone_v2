@@ -1,35 +1,34 @@
 #!/usr/bin/env bash
-#A Bash script that sets up your web servers for the deployment of web_static
-sudo apt-get update
-sudo apt-get install nginx -y
+#set up your web servers for the deployment of web_static
 
-sudo mkdir -p /data/web_static/releases/test /data/web_static/shared/
-#adding a test string
-echo "Welcome to my server" | sudo tee /data/web_static/releases/test/index.html
+apt-get update -y
+apt-get install -y nginx
 
-echo "
-server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-
-        root /var/www/html;
-        index index.html index.htm index.nginx-debian.html;
-
-        error_page 404 /404.html;
-        location = /404.html {
-                internal;
-        }
-        location /redirect_me {
-                return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-        }
-        location /hbnb_static {
-                alias /data/web_static/current/;
-        }
-
-}" | sudo tee /etc/nginx/sites-available/default
-sudo ln -sf /data/web_static/releases/test /data/web_static/current
-
-sudo rm -rf /etc/nginx/sites-enabled
-sudo ln -sf /etc/nginx/sites-available/ /etc/nginx/sites-enabled
-sudo chown -hR ubuntu:ubuntu /data
-sudo service nginx restart
+mkdir -p /data/web_static/releases/test/
+mkdir -p /data/web_static/shared/
+ln -sf /data/web_static/releases/test/ /data/web_static/current
+echo 'Hello there!!!' > /data/web_static/releases/test/index.html
+sudo chown -R ubuntu:ubuntu /data/
+printf %s "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By $HOSTNAME;
+    root   /var/www/html;
+    index  index.html index.htm index.nginx-debian.html;
+    server_name _;
+    
+    location /hbnb_static/ {
+        alias /data/web_static/current/;
+	index index.html index.htm;
+	autoindex off;
+    }
+    location /redirect_me {
+        return 301 http://graceeffiong.tech;
+    }
+    error_page 404 /404.html;
+    location /404 {
+      root /var/www/error;
+      internal;
+    }
+}" > /etc/nginx/sites-available/default
+service nginx restart
