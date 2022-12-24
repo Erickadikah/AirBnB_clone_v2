@@ -5,7 +5,7 @@ sudo apt-get install nginx -y
 
 sudo mkdir -p /data/web_static/releases/test /data/web_static/shared/
 
-echo "Welcome to my server" | sudo tee /data/web_static/releases/test/index.html
+echo "Holberton School" | sudo tee /data/web_static/releases/test/index.html
 
 echo "
 server {
