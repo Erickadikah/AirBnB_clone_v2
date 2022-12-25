@@ -11,7 +11,7 @@ def do_deploy(archive_path):
     if not archive_path:
         return False
     #uploading to /tmp/ in the server
-    cd ("/tmp/"):
+    with cd ("/tmp/"):
         res = put(archive_path, "/tmp/")
         print(res)
 
@@ -29,6 +29,9 @@ def do_deploy(archive_path):
 
     # Delete the archive from the web serve
     run("rm /tmp/{}".format(file_name))
+
+    run("mv /data/web_static/releases/{}/web_static/* "
+        "/data/web_static/releases/{}/".format(remote_name, remote_name))
 
     # Deleting the symbolic link
     run("rm -rf /data/web_static/current")
