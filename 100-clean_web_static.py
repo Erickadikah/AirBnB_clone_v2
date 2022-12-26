@@ -17,7 +17,7 @@ def do_clean(number=0):
     if number == 0:
         number = 1
     else:
-        number =number
+        number = number
     num_del = present - number
     point = -1
     for i in range(num_del):
