@@ -14,8 +14,8 @@ def do_pack():
      name = "web_static_{}.tgz".format(time)
      file_name = "versions/{}".format(name)
      location = local("tar -cvzf {} web_static/".format(file_name))
-     if location:
-         return (location)
+     if file_name:
+         return (file_name)
      else:
          return None
 
@@ -57,10 +57,9 @@ def do_deploy(archive_path):
      return True
 
 def deploy():
-     """distributing archie to web server"""
+     """distributing archive to web server"""
      path = do_pack()
      if not path:
          return False
-     f = do_deploy(path)
-     return (f)
-
+     ret  = do_deploy(path)
+     return (ret)
