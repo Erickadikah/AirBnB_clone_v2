@@ -13,11 +13,12 @@ def do_clean(number=0):
     number = int(number)
     # keep only the most recent version of your archive
     if number >= present:
+        return
+    if number == 0:
         number = 1
     else:
         number =number
-    num_del = preseunt - number
-    point = -1
+    num_del = present - number
     point = -1
     for i in range(num_del):
         local("rm versions/{}".format(files_[point]))
