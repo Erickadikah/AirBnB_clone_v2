@@ -3,8 +3,6 @@
 the contents of the web_static folder"""
 from fabric.api import *
 from datetime import datetime
-from fabric.api import put, run, env
-import os
 
 
 env.hosts = ['54.89.21.208', "35.153.194.6"]
@@ -12,23 +10,35 @@ env.hosts = ['54.89.21.208', "35.153.194.6"]
 
 def do_deploy(archive_path):
     """deploy function gerates a .tgz archive from the contents of webstatic"""
-    if not os.path.exists(archive_path):
+    if not archive_path:
         return False
+    #uploading to /tmp/ in the server
+    with cd("/tmp/"):
+        res = put(archive_path, "/tmp/")
+        print(res)
 
-    data_path = '/data/web_static/releases/'
-    temp = archive_path.split('.')[0]
-    file_name = temp.split('/')[1]
-    dest = data_path + file_name
+    # Make directory for the file extraction
+    run("mkdir -p /data/web_static/releases/")
 
-    try:
-        put(archive_path, '/tmp')
-        run('sudo mkdir -p {}'.format(dest))
-        run('sudo tar -xzf /tmp/{}.tgz -C {}'.format(file_name, dest))
-        run('sudo rm -f /tmp/{}.tgz'.format(file_name))
-        run('sudo mv {}/web_static/* {}/'.format(dest, dest))
-        run('sudo rm -rf {}/web_static/'.format(dest))
-        run('sudo rm -rf /data/web_static/current')
-        run('sudo ln -s {} /data/web_static/current'.format(dest))
-        return True
-    except RuntimeError:
-        return False
+    # GEt the file name
+    file_name = archive_path.split("/")[-1]
+
+    # Extract the file from archive
+    remote_name = file_name.split(".")[0]
+    run("mkdir -p /data/web_static/releases/{}".format(remote_name))
+    run("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
+        .format(file_name, remote_name))
+
+    # Delete the archive from the web serve
+    run("rm /tmp/{}".format(file_name))
+
+    # Move file out of web_static
+    run("mv /data/web_static/releases/{}/web_static/* "
+        "/data/web_static/releases/{}/".format(remote_name, remote_name))
+
+    # Delete the symbolic link
+    run("rm -rf /data/web_static/current")
+
+    # Create a new the symbolic link
+    run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
+        .format(remote_name))
