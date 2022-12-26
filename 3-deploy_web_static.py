@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """distributing archiveuploading and deplyoying on servers"""
 from fabric.api import *
 from datetime import datetime
