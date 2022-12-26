@@ -5,14 +5,15 @@ from fabric.api import *
 from datetime import datetime
 
 
-env.hosts = ['54.89.21.208', "35.153.194.6"]
+env.hosts = ['100.25.31.96', "107.23.94.25"]
 
 
 def do_deploy(archive_path):
-    """deploy function gerates a .tgz archive from the contents of webstatic"""
+    """generates a .tgz archive from the contents of the web_static"""
     if not archive_path:
         return False
-    #uploading to /tmp/ in the server
+    # Upload to /tmp/ in the server
+    # put(archive_path, "/tmp/")
     with cd("/tmp/"):
         res = put(archive_path, "/tmp/")
         print(res)
@@ -29,10 +30,10 @@ def do_deploy(archive_path):
     run("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
         .format(file_name, remote_name))
 
-    # Delete the archive from the web serve
+    # Deleting the archive from the web server
     run("rm /tmp/{}".format(file_name))
 
-    # Move file out of web_static
+    # Moving file out of web_static
     run("mv /data/web_static/releases/{}/web_static/* "
         "/data/web_static/releases/{}/".format(remote_name, remote_name))
 
