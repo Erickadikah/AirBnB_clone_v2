@@ -32,4 +32,3 @@ def do_deploy(archive_path):
         return True
     except RuntimeError:
         return False
-
