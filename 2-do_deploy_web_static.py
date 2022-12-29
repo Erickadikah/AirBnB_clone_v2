@@ -19,27 +19,27 @@ def do_deploy(archive_path):
         print(res)
 
     # Make directory for the file extraction
-    run("mkdir -p /data/web_static/releases/")
+    sudo("mkdir -p /data/web_static/releases/")
 
     # GEt the file name
     file_name = archive_path.split("/")[-1]
 
     # Extract the file from archive
     remote_name = file_name.split(".")[0]
-    run("mkdir -p /data/web_static/releases/{}".format(remote_name))
-    run("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
+    sudo("mkdir -p /data/web_static/releases/{}".format(remote_name))
+    sudo("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
         .format(file_name, remote_name))
 
     # Deleting the archive from the web server
-    run("rm /tmp/{}".format(file_name))
+    sudo("rm /tmp/{}".format(file_name))
 
     # Moving file out of web_static
-    run("mv /data/web_static/releases/{}/web_static/* "
+    sudo("mv /data/web_static/releases/{}/web_static/* "
         "/data/web_static/releases/{}/".format(remote_name, remote_name))
 
     # Delete the symbolic link
-    run("rm -rf /data/web_static/current")
+    sudo("rm -rf /data/web_static/current")
 
     # Create a new the symbolic link
-    run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
+    sudo("ln -s /data/web_static/releases/{}/ /data/web_static/current"
         .format(remote_name))
