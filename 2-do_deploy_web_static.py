@@ -4,7 +4,6 @@ the contents of the web_static folder"""
 from fabric.api import *
 from datetime import datetime
 
-
 env.hosts = ['54.89.21.208',"35.153.194.6"]
 
 
