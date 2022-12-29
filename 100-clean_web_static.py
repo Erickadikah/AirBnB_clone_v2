@@ -24,9 +24,5 @@ def do_clean(number=0):
     for i in range(num_del):
         local("rm versions/{}".format(files_[point]))
         point -= 1
-    """
-    Deleting all unnecessary archives (all archives
-    minus the number to keep) in the /data/web_static/releases
-    """
     with cd("/tmt"):
         run("ls -t -r | head -n -{} | sudo xargs rm".format(number))
