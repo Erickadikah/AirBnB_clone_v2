@@ -6,6 +6,7 @@ Routes:
     /c/<text> - display "C <text>"
     /python/<text> - display "Python is cool"
     /number/<n> - display n if integer
+    /number/<n> - display n if integer
 """
 from flask import Flask
 app = Flask(__name__)
@@ -39,9 +40,8 @@ def python(text="is cool"):
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
-def is_int(n):
+def number_n(n):
     """checks if argument passed is and interger"""
-    if isinstance(n, int):
         return "{} is an interger".format(n)
 
 
