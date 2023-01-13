@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from flask import Flask
 """Starts Flask web app
 Routes:
     / - display "Hello HBNB!"
@@ -7,11 +6,13 @@ Routes:
     /c/<text> - display "C <text>"
     /python/<text> - display "Python is cool"
 """
+from flask import Flask
+
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def hello_hbnb():
+def hello_route():
     """prints hello HBNB!"""
     return 'Hello HBNB!'
 
