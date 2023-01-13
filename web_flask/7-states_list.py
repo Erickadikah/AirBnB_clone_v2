@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from models import storage
+from models.__init__ import storage
 from flask import Flask
 
 app = Flask(__name__)
@@ -9,7 +9,7 @@ def state_list():
     """display an HTML page with a list of all state in BDstorage.
     sorted by name
     """
-    states = storage.all("state")
+    states = storage.all("State")
     return render_template("7-states_list.html", states=states)
 
 @app.teardown_appcontext
