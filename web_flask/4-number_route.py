@@ -42,7 +42,7 @@ def python(text="is cool"):
 @app.route('/number/<int:n>', strict_slashes=False)
 def number_n(n):
     """checks if argument passed is and interger"""
-        return "{} is an interger".format(n)
+    return "%i is a number" % n
 
 
 if __name__ == '__main__':
