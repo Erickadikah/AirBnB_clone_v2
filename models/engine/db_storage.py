@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Defines the DBStorage engine."""
 from os import getenv
+from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
 #from models.base_model import BaseModel
 from models.amenity import Amenity
@@ -81,3 +82,7 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """call the remove method closing SQLachemy session"""
+        self.__session.close()

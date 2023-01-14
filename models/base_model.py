@@ -5,6 +5,7 @@ import sqlalchemy
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
+from models import storage_type
 
 Base = declarative_base()
 
@@ -23,16 +24,20 @@ class BaseModel:
             self.updated_at = datetime.now()
             #storage.new(self)
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+            for k, v in kwargs.items():
+                if (k == 'updated_at'):
+                    kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                if (k == 'created_at'):
+                    kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+                if (k == '__class__'):
+                    del kwargs['__class__']
+            if 'id' not in kwargs.keys():
+                self.id = str(uuid.uuid4())
+                self.created_at = datetime.now()
+                self.updated_at = datetime.now()
             self.__dict__.update(kwargs)
-
-            for key, value in kwargs.items():
-                setattr(self, key, value)
-
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -64,4 +69,5 @@ class BaseModel:
 
     def delete(self):
         """Delete the current instance from the storage"""
+        from models import storage
         storage.delete()
