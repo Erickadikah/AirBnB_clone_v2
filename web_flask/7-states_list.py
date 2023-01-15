@@ -4,8 +4,7 @@
 
 """
 from models import storage
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -20,7 +19,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def teardown(exc):
+def teardown(exception):
     """Remove the current SQLAlchemy session."""
     storage.close()
 

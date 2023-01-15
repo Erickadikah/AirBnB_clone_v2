@@ -5,7 +5,6 @@ from models.base_model import Base
 from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-#from models import storage
 from os import getenv
 
 class State(BaseModel, Base):
@@ -21,9 +20,12 @@ class State(BaseModel, Base):
             equals the current state.id
             fileStorage relationship between state and city
             """
+            from models import storage
             related_cities = []
-            objects = storage.all(City)
+
+            cities = storage.all(City)
+           # objects = storage.all(City)
             for key, value in objects.items():
                 if value.state_id == self.id:
                     related_cities.append(value)
-                return related_cities
+            return related_cities
