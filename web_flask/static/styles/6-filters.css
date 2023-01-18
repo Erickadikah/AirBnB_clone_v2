@@ -40,6 +40,7 @@
 
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
+	/* max-height: 300px; */
 }
 
 .locations:hover .popover {
@@ -61,7 +62,7 @@ li {
 
 h2 {
 	font-size: 16px;
-	padding-left: 30px;
+	padding-left: 20px;
 	margin: 0px;
 }
 
