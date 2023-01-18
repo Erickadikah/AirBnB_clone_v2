@@ -9,22 +9,11 @@ from flask import Flask
 
 app = Flask(__name__)
 
-
-@app.route('/cities_by_states', strict_slashes=False)
-def cities_by_states():
-    """display an HTML page with a list of all states in related cities.
-    sorted by name
-    """
-    states = storage.all("State")
-    return render_template("8-cities_by_states.html", state=states)
-
-
-@app.route('/states/<id>', strict_slashes=False)
-def cities_id():
-    for state in storage.all("State").values():
-        if state.id == id:
-            return render_template("9-states.html", state=states)
-        return render_template("9-states.html")
+@app.route('/hbnb_filters', strict_slashes=False)
+def hbnb_filters():
+        states = storage.all("State")
+        amenities = storage.all("Amenity")
+        return render_template("10-hbnb_filters.html", states=states, amenities=amenities)
 
 
 @app.teardown_appcontext
