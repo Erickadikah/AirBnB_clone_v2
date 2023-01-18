@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Starts a flask app
     listens to 0.0.0.0:5000
-
 """
 from flask import Flask, render_template
 from models.__init__ import storage
@@ -15,18 +14,16 @@ def state():
     """"displays an HTML page with a list of all in related cities.
     sorted by name an id
     """
+    state = storage.all('State')
     return render_template('9-states.html', state=state)
 
 
-@app.route('/cities_by_states', strict_slashes=False)
-def state_id():
-    """display an HTML page with a list of all states in related cities.
-    sorted by name
-    """
-    states = storage.all("State")
+@app.route('/states/<id>', strict_slashes=False)
+def states_id(id):
+    """Displays an HTML page with info about <id>, if it exists."""
     for state in storage.all("State").values():
         if state.id == id:
-            return render_template("8-cities_by_states.html", state=states)
+            return render_template("9-states.html", state=state)
     return render_template("9-states.html")
 
 
